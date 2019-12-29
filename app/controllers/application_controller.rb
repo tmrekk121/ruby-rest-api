@@ -9,12 +9,13 @@ class ApplicationController < ActionController::API
     authenticate_or_request_with_http_basic(nil, message) do |user_id, password|
       if params[:user_id] != user_id && params[:user_id] != nil
         render status: 403, json: { 'message':'No Permission for Update' }
-      end
-      @user = User.find_by(user_id: user_id)
-      if @user.nil?
-        render status: 404, json: { 'message':'No such user' }
       else
-        user_id == @user.user_id && password == @user.password
+        @user = User.find_by(user_id: user_id)
+        if @user.nil?
+          render status: 404, json: { 'message':'No such user' }
+        else
+          user_id == @user.user_id && password == @user.password
+        end
       end
     end
   end

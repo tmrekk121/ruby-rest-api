@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   end
 
   def signup
-
     if params[:user_id].nil? || params[:password].nil?
       render status: 400, json: { message:'Account creation failed', 'cause':'required user_id and password' }
     else
