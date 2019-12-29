@@ -14,20 +14,22 @@ class UsersController < ApplicationController
   end
 
   def signup
+
     if params[:user_id].nil? || params[:password].nil?
       render status: 400, json: { message:'Account creation failed', 'cause':'required user_id and password' }
-    end
-    user = User.new(user_params)
-    if user.save
-      render status: 200, json: { message:'Account successfully created', user:{ 'user_id':user.user_id ,'nickname':user.user_id } }
-    elsif user.user_id.blank? || user.password.blank?
-      render status: 400, json: { message:'Account creation failed', 'cause':'required user_id and password' }
-    elsif user.user_id.length < 6 || user.user_id.length > 20 || user.password.length < 8 || user.password.length > 20
-      render status: 400, json: { message:'Account creation failed', 'cause':'length user_id and password' }
-    elsif User.exists?(user_id: user.user_id)
-      render status: 400, json: { message:'Account creation failed', 'cause':'already same user_id is used' }
-    elsif !(user.password.ascii_only?) || user.password.include?(" ")
-      render status: 400, json: { message:'Account creation failed', 'cause':'pattern user_id and password' }
+    else
+      user = User.new(user_params)
+      if user.save
+        render status: 200, json: { message:'Account successfully created', user:{ 'user_id':user.user_id ,'nickname':user.user_id } }
+      elsif user.user_id.blank? || user.password.blank?
+        render status: 400, json: { message:'Account creation failed', 'cause':'required user_id and password' }
+      elsif user.user_id.length < 6 || user.user_id.length > 20 || user.password.length < 8 || user.password.length > 20
+        render status: 400, json: { message:'Account creation failed', 'cause':'length user_id and password' }
+      elsif User.exists?(user_id: user.user_id)
+        render status: 400, json: { message:'Account creation failed', 'cause':'already same user_id is used' }
+      elsif !(user.password.ascii_only?) || user.password.include?(" ")
+        render status: 400, json: { message:'Account creation failed', 'cause':'pattern user_id and password' }
+      end
     end
   end
 
