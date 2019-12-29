@@ -18,17 +18,21 @@ class ApplicationController < ActionController::API
   end
 
   def basic_auth
-    logger.debug(request.headers['HTTP_AUTHORIZATION'])
-    message = { 'message':'Authentication Faild' }.to_json
-    authenticate_or_request_with_http_basic(nil, message) do |user_id, password|
-      if params[:user_id] != user_id && params[:user_id] != nil
-        render status: 403, json: { 'message':'No Permission for Update' }
-      else
-        @user = User.find_by(user_id: user_id)
-        if @user.nil?
-          render status: 404, json: { 'message':'No User found' }
+    if request.headers['HTTP_AUTHORIZATION'].nil?
+      render status: 403, json: { 'message':'No Permission for Update' }
+    else
+      #logger.debug(request.headers['HTTP_AUTHORIZATION'])
+      message = { 'message':'Authentication Faild' }.to_json
+      authenticate_or_request_with_http_basic(nil, message) do |user_id, password|
+        if params[:user_id] != user_id && params[:user_id] != nil
+          render status: 403, json: { 'message':'No Permission for Update' }
         else
-          user_id == @user.user_id && password == @user.password
+          @user = User.find_by(user_id: user_id)
+          if @user.nil?
+            render status: 404, json: { 'message':'No User found' }
+          else
+            user_id == @user.user_id && password == @user.password
+          end
         end
       end
     end
