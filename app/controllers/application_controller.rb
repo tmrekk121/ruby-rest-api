@@ -23,3 +23,4 @@ end
 # curl tmrekk121 true
 # curl -X PATCH -H 'Content-Type:application/json' -H 'Authorization:Basic dG1yZWtrMTIxOnBhc3N3b3Jk' -d '{ 'nickname': 'tmrekk121', 'comment': 'auth test' }' http://0.0.0.0:3000/users/tmrekk121
 # curl -X POST -H 'Content-Type:application/json' -d '{ "user_id": "testtest2", "password": "password" }' http://0.0.0.0:3000/signup
+# curl -X PATCH -H 'Content-Type:application/json' -H 'Authorization:Basic VGFyb1lhbWFkYTpQYVNTd2Q0VFk=' -d '{ 'nickname': 'たろー', 'comment': '僕は元気です' }'  https://ruby-rest-api.herokuapp.com/users/TaroYamada

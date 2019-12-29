@@ -14,6 +14,9 @@ class UsersController < ApplicationController
   end
 
   def signup
+    if params[:user_id].nil? || params[:password].nil?
+      render status: 400, json: { message:'Account creation failed', 'cause':'required user_id and password' }
+    end
     user = User.new(user_params)
     if user.save
       render status: 200, json: { message:'Account successfully created', user:{ 'user_id':user.user_id ,'nickname':user.user_id } }
@@ -56,7 +59,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:user_id, :password, :nickname, :comment)
+    params.require(:user).permit(:user_id, :password)
   end
 
   def user_update_params
