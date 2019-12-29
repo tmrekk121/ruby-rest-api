@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
   end
 
   def basic_auth
-    request.headers.sort.map { |k, v| logger.info "#{k}:#{v}" }
+    logger.debug(request.headers['HTTP_AUTHORIZATION'])
     message = { 'message':'Authentication Faild' }.to_json
     authenticate_or_request_with_http_basic(nil, message) do |user_id, password|
       if params[:user_id] != user_id && params[:user_id] != nil
