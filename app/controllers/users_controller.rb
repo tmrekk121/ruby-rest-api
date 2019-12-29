@@ -4,12 +4,8 @@ class UsersController < ApplicationController
     user = User.find_by(user_id: params[:user_id])
     if user.nickname == nil
       render status: 200, json: {"message": "User details by user_id", "user": {"user_id": user.user_id, "nickname":user.user_id} }
-    elsif user
-      render status: 200, json: {"message": "User details by user_id", "user": {"user_id": user.user_id, "nickname":user.nickname} }
-    elsif user == nil
-      render status: 404, json: { 'message':'No User found' }
     else
-      render status: 401, json: { 'message':'Authentication Faild' }
+      render status: 200, json: {"message": "User details by user_id", "user": {"user_id": user.user_id, "nickname":user.nickname} }
     end
   end
 
